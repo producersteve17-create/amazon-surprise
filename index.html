@@ -111,11 +111,11 @@
         "Pet Supplies", "Outdoors", "Toys", "Health", "Automotive", "Office"
     ];
 
-    // Sample data (Expandable to 500 items easily)
+    // Your item lists
     const items = {
         "Electronics": ["Mechanical Keyboard", "Smart Watch", "Webcam", "Bluetooth Speaker", "External Hard Drive", "Projector", "Drone", "Drawing Tablet", "Power Bank", "VR Headset"],
         "Home & Kitchen": ["Air Fryer", "Espresso Machine", "Weighted Blanket", "Cast Iron Skillet", "Smart Mirror", "Robot Vacuum", "Herb Garden Kit", "Wine Decanter", "Oil Diffuser", "Neon Sign"],
-        // ... (Adding thousands more words programmatically or manually would go here)
+        // "All" acts as the fallback for everything
         "All": ["Acoustic Foam", "Bonsai Kit", "Crystal Ball", "Djembe Drum", "Electric Unicycle", "Film Camera", "Gasket Set", "Hammock", "Isolator Pad", "Jigsaw Puzzle"]
     };
 
@@ -129,21 +129,40 @@
         const chip = document.createElement('div');
         chip.className = 'chip';
         chip.innerText = cat;
+        
         chip.onclick = () => {
+            const isAlreadyActive = chip.classList.contains('active');
+            
+            // 1. Clear all existing active states
             document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
-            chip.classList.add('active');
-            activeCategory = cat;
+            
+            if (isAlreadyActive) {
+                // 2. If it was already active, we "deselect" it
+                activeCategory = "All";
+            } else {
+                // 3. Otherwise, we make it the new active category
+                chip.classList.add('active');
+                activeCategory = cat;
+            }
         };
         grid.appendChild(chip);
     });
 
     // The Logic
     document.getElementById('surprise-btn').onclick = () => {
-        const list = items[activeCategory] || items["All"];
-        const randomItem = list[Math.floor(Math.random() * list.length)];
+        // If "All" is selected, we combine all lists into one big pool
+        let pool = [];
+        if (activeCategory === "All") {
+            Object.values(items).forEach(categoryList => {
+                pool = pool.concat(categoryList);
+            });
+        } else {
+            pool = items[activeCategory] || items["All"];
+        }
+
+        const randomItem = pool[Math.floor(Math.random() * pool.length)];
         const randomModifier = modifiers[Math.floor(Math.random() * modifiers.length)];
         
-        // Construct the search query
         const query = encodeURIComponent(`${randomModifier} ${randomItem}`);
         const amazonUrl = `https://www.amazon.com/s?k=${query}`;
         
@@ -152,4 +171,5 @@
 </script>
 
 </body>
+
 </html>
