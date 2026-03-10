@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surprise Me | Amazon Discovery</title>
+    <style>
+        :root {
+            --bg-color: #f5f5f7;
+            --card-bg: #ffffff;
+            --text-main: #1d1d1f;
+            --accent-blue: #0071e3;
+            --gray-text: #86868b;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 600px;
+            padding: 40px;
+            background: var(--card-bg);
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        h1 {
+            font-size: 40px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: var(--gray-text);
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .chip {
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: #eee;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+            user-select: none;
+        }
+
+        .chip.active {
+            background: var(--accent-blue);
+            color: white;
+        }
+
+        #surprise-btn {
+            background-color: var(--accent-blue);
+            color: white;
+            border: none;
+            padding: 18px 45px;
+            font-size: 20px;
+            font-weight: 500;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 15px rgba(0, 113, 227, 0.3);
+        }
+
+        #surprise-btn:hover {
+            transform: scale(1.03);
+            background-color: #0077ed;
+        }
+
+        #surprise-btn:active {
+            transform: scale(0.98);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Discovery</h1>
+    <p>Find something you didn't know you needed.</p>
+
+    <div class="category-grid" id="categoryGrid">
+        </div>
+
+    <button id="surprise-btn">Surprise Me</button>
+</div>
+
+<script>
+    const categories = [
+        "Electronics", "Home & Kitchen", "Beauty", "Clothing", 
+        "Pet Supplies", "Outdoors", "Toys", "Health", "Automotive", "Office"
+    ];
+
+    // Sample data (Expandable to 500 items easily)
+    const items = {
+        "Electronics": ["Mechanical Keyboard", "Smart Watch", "Webcam", "Bluetooth Speaker", "External Hard Drive", "Projector", "Drone", "Drawing Tablet", "Power Bank", "VR Headset"],
+        "Home & Kitchen": ["Air Fryer", "Espresso Machine", "Weighted Blanket", "Cast Iron Skillet", "Smart Mirror", "Robot Vacuum", "Herb Garden Kit", "Wine Decanter", "Oil Diffuser", "Neon Sign"],
+        // ... (Adding thousands more words programmatically or manually would go here)
+        "All": ["Acoustic Foam", "Bonsai Kit", "Crystal Ball", "Djembe Drum", "Electric Unicycle", "Film Camera", "Gasket Set", "Hammock", "Isolator Pad", "Jigsaw Puzzle"]
+    };
+
+    const modifiers = ["Vintage", "Professional", "Miniature", "Industrial", "Portable", "Luxury", "Smart", "Compact", "Retro", "Electric"];
+
+    let activeCategory = "All";
+
+    // Setup Category Toggles
+    const grid = document.getElementById('categoryGrid');
+    categories.forEach(cat => {
+        const chip = document.createElement('div');
+        chip.className = 'chip';
+        chip.innerText = cat;
+        chip.onclick = () => {
+            document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+            chip.classList.add('active');
+            activeCategory = cat;
+        };
+        grid.appendChild(chip);
+    });
+
+    // The Logic
+    document.getElementById('surprise-btn').onclick = () => {
+        const list = items[activeCategory] || items["All"];
+        const randomItem = list[Math.floor(Math.random() * list.length)];
+        const randomModifier = modifiers[Math.floor(Math.random() * modifiers.length)];
+        
+        // Construct the search query
+        const query = encodeURIComponent(`${randomModifier} ${randomItem}`);
+        const amazonUrl = `https://www.amazon.com/s?k=${query}`;
+        
+        window.open(amazonUrl, '_blank');
+    };
+</script>
+
+</body>
+</html>
