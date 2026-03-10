@@ -21,17 +21,20 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
+            padding: 20px;
             text-align: center;
         }
 
         .container {
+            width: 100%;
             max-width: 600px;
             padding: 40px;
             background: var(--card-bg);
             border-radius: 30px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            box-sizing: border-box;
         }
 
         h1 {
@@ -49,25 +52,28 @@
 
         .category-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-            gap: 10px;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 12px;
             margin-bottom: 30px;
         }
 
         .chip {
-            padding: 8px 16px;
+            padding: 10px 14px;
             border-radius: 20px;
-            background: #eee;
-            font-size: 13px;
+            background: #f2f2f7;
+            font-size: 14px;
+            font-weight: 500;
             cursor: pointer;
             transition: all 0.2s ease;
-            border: 1px solid transparent;
+            border: 2px solid transparent;
             user-select: none;
+            color: var(--text-main);
         }
 
         .chip.active {
             background: var(--accent-blue);
             color: white;
+            border-color: var(--accent-blue);
         }
 
         #surprise-btn {
@@ -99,8 +105,7 @@
     <h1>Discovery</h1>
     <p>Find something you didn't know you needed.</p>
 
-    <div class="category-grid" id="categoryGrid">
-        </div>
+    <div class="category-grid" id="categoryGrid"></div>
 
     <button id="surprise-btn">Surprise Me</button>
 </div>
@@ -111,53 +116,63 @@
         "Pet Supplies", "Outdoors", "Toys", "Health", "Automotive", "Office"
     ];
 
-    // Your item lists
+    // Added a few samples for every category so the logic doesn't break
     const items = {
-        "Electronics": ["Mechanical Keyboard", "Smart Watch", "Webcam", "Bluetooth Speaker", "External Hard Drive", "Projector", "Drone", "Drawing Tablet", "Power Bank", "VR Headset"],
-        "Home & Kitchen": ["Air Fryer", "Espresso Machine", "Weighted Blanket", "Cast Iron Skillet", "Smart Mirror", "Robot Vacuum", "Herb Garden Kit", "Wine Decanter", "Oil Diffuser", "Neon Sign"],
-        // "All" acts as the fallback for everything
-        "All": ["Acoustic Foam", "Bonsai Kit", "Crystal Ball", "Djembe Drum", "Electric Unicycle", "Film Camera", "Gasket Set", "Hammock", "Isolator Pad", "Jigsaw Puzzle"]
+        "Electronics": ["Mechanical Keyboard", "Smart Watch", "Webcam", "Bluetooth Speaker", "VR Headset"],
+        "Home & Kitchen": ["Air Fryer", "Espresso Machine", "Weighted Blanket", "Cast Iron Skillet", "Robot Vacuum"],
+        "Beauty": ["Skincare Set", "Hair Dryer", "Massage Gun", "Makeup Mirror", "Electric Toothbrush"],
+        "Clothing": ["Leather Wallet", "Canvas Backpack", "Polarized Sunglasses", "Beanie", "Wrist Watch"],
+        "Pet Supplies": ["Automatic Feeder", "Cat Tree", "Dog Bed", "Aquarium Light", "Pet Camera"],
+        "Outdoors": ["Camping Tent", "Hammock", "Binoculars", "Water Bottle", "Flashlight"],
+        "Toys": ["LEGO Set", "Board Game", "RC Car", "Drone", "Puzzle"],
+        "Health": ["Yoga Mat", "Air Purifier", "Foam Roller", "Humidifier", "Scale"],
+        "Automotive": ["Dash Cam", "Car Vacuum", "Jump Starter", "Phone Mount", "Tire Inflator"],
+        "Office": ["Desk Lamp", "Ergonomic Mouse", "Monitor Stand", "Notebook Set", "Paper Shredder"],
+        "All": ["Bonsai Kit", "Crystal Ball", "Djembe Drum", "Film Camera", "Magic Kit"]
     };
 
     const modifiers = ["Vintage", "Professional", "Miniature", "Industrial", "Portable", "Luxury", "Smart", "Compact", "Retro", "Electric"];
 
     let activeCategory = "All";
 
-    // Setup Category Toggles
     const grid = document.getElementById('categoryGrid');
+
     categories.forEach(cat => {
         const chip = document.createElement('div');
         chip.className = 'chip';
         chip.innerText = cat;
         
-        chip.onclick = () => {
-            const isAlreadyActive = chip.classList.contains('active');
+        chip.addEventListener('click', function() {
+            const isAlreadyActive = this.classList.contains('active');
             
-            // 1. Clear all existing active states
+            // Remove active class from all chips
             document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
             
             if (isAlreadyActive) {
-                // 2. If it was already active, we "deselect" it
                 activeCategory = "All";
             } else {
-                // 3. Otherwise, we make it the new active category
-                chip.classList.add('active');
+                this.classList.add('active');
                 activeCategory = cat;
             }
-        };
+        });
+
         grid.appendChild(chip);
     });
 
-    // The Logic
     document.getElementById('surprise-btn').onclick = () => {
-        // If "All" is selected, we combine all lists into one big pool
         let pool = [];
+
+        // Logic to build the item pool
         if (activeCategory === "All") {
-            Object.values(items).forEach(categoryList => {
-                pool = pool.concat(categoryList);
+            // Merge all category lists
+            Object.keys(items).forEach(key => {
+                pool = pool.concat(items[key]);
             });
         } else {
-            pool = items[activeCategory] || items["All"];
+            // Use specific category or fallback to All if specific category is empty
+            pool = items[activeCategory] && items[activeCategory].length > 0 
+                   ? items[activeCategory] 
+                   : items["All"];
         }
 
         const randomItem = pool[Math.floor(Math.random() * pool.length)];
@@ -171,5 +186,4 @@
 </script>
 
 </body>
-
 </html>
