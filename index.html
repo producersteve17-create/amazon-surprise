@@ -116,27 +116,34 @@
         "Pet Supplies", "Outdoors", "Toys", "Health", "Automotive", "Office"
     ];
 
-    // Added a few samples for every category so the logic doesn't break
+    // The Mega-List Matrix
     const items = {
-        "Electronics": ["Mechanical Keyboard", "Smart Watch", "Webcam", "Bluetooth Speaker", "VR Headset"],
-        "Home & Kitchen": ["Air Fryer", "Espresso Machine", "Weighted Blanket", "Cast Iron Skillet", "Robot Vacuum"],
-        "Beauty": ["Skincare Set", "Hair Dryer", "Massage Gun", "Makeup Mirror", "Electric Toothbrush"],
-        "Clothing": ["Leather Wallet", "Canvas Backpack", "Polarized Sunglasses", "Beanie", "Wrist Watch"],
-        "Pet Supplies": ["Automatic Feeder", "Cat Tree", "Dog Bed", "Aquarium Light", "Pet Camera"],
-        "Outdoors": ["Camping Tent", "Hammock", "Binoculars", "Water Bottle", "Flashlight"],
-        "Toys": ["LEGO Set", "Board Game", "RC Car", "Drone", "Puzzle"],
-        "Health": ["Yoga Mat", "Air Purifier", "Foam Roller", "Humidifier", "Scale"],
-        "Automotive": ["Dash Cam", "Car Vacuum", "Jump Starter", "Phone Mount", "Tire Inflator"],
-        "Office": ["Desk Lamp", "Ergonomic Mouse", "Monitor Stand", "Notebook Set", "Paper Shredder"],
-        "All": ["Bonsai Kit", "Crystal Ball", "Djembe Drum", "Film Camera", "Magic Kit"]
+        "Electronics": ["Mechanical Keyboard", "Smart Watch", "Webcam", "Bluetooth Speaker", "VR Headset", "External Hard Drive", "Projector", "Drawing Tablet", "Power Bank", "Drone", "Action Camera", "Noise Cancelling Headphones", "Gaming Mouse", "Microphone", "Wifi Extender", "Smart Plug", "Laptop Stand", "Monitor Light Bar", "Digital Picture Frame", "E-Reader"],
+        "Home & Kitchen": ["Air Fryer", "Espresso Machine", "Weighted Blanket", "Cast Iron Skillet", "Robot Vacuum", "Herb Garden Kit", "Wine Decanter", "Oil Diffuser", "Neon Sign", "Electric Kettle", "Immersion Blender", "Milk Frother", "Magnetic Knife Bar", "Cold Brew Maker", "Towel Warmer", "Breakfast Sandwich Maker", "Air Purifier", "Pasta Machine", "Pizza Stone", "Electric Wine Opener"],
+        "Beauty": ["Skincare Set", "Hair Dryer", "Massage Gun", "Makeup Mirror", "Electric Toothbrush", "Red Light Therapy Mask", "Beard Trimmer", "Jade Roller", "Ionic Hair Brush", "Bath Bomb Set", "Silk Pillowcase", "Foot Spa", "Microcurrent Device", "Manicure Kit", "Perfume Organizer", "Scalp Massager", "Paraffin Wax Bath", "Hair Straightener", "Blackhead Remover", "Makeup Brush Cleaner"],
+        "Clothing": ["Leather Wallet", "Canvas Backpack", "Polarized Sunglasses", "Beanie", "Wrist Watch", "Bucket Hat", "Compression Socks", "Duffel Bag", "Silk Tie", "Rain Poncho", "Belt Buckle", "Crossbody Bag", "Tactical Gloves", "Scarf", "Bucket Hat", "Running Vest", "Travel Umbrella", "Jewelry Box", "Shoe Horn", "Laptop Bag"],
+        "Pet Supplies": ["Automatic Feeder", "Cat Tree", "Dog Bed", "Aquarium Light", "Pet Camera", "Self-Cleaning Litter Box", "Dog Grooming Kit", "Bird Feeder", "Hamster Maze", "Pet Water Fountain", "Reptile Heat Lamp", "Interactive Fetch Machine", "Cat Nip Toy", "Dog Raincoat", "Pet Carrier", "Slow Feeder Bowl", "Aquarium Decor", "Scratching Post", "Pet Hair Remover", "Calming Treats"],
+        "Outdoors": ["Camping Tent", "Hammock", "Binoculars", "Water Bottle", "Flashlight", "Portable Grill", "Camping Stove", "Sleeping Pad", "Telescopic Stool", "Hydration Pack", "Solar Charger", "Trekking Poles", "Life Jacket", "Inflatable Kayak", "Fishing Tackle Box", "Mosquito Repeller", "Multi-Tool", "Picnic Blanket", "Compass", "Bear Bell"],
+        "Toys": ["LEGO Set", "Board Game", "RC Car", "Drone", "Puzzle", "Action Figure", "Model Rocket", "Chemistry Set", "Drawing Tablet", "Slime Kit", "Stuffed Animal", "Yo-Yo", "Trading Cards", "Marble Run", "Magic Kit", "Rubiks Cube", "Building Blocks", "Fidget Spinner", "Walkie Talkies", "Play Tent"],
+        "Health": ["Yoga Mat", "Air Purifier", "Foam Roller", "Humidifier", "Scale", "First Aid Kit", "Vitamin Organizer", "Blood Pressure Monitor", "Posture Corrector", "Therapy Lamp", "Hand Sanitizer Bulk", "Heating Pad", "Neti Pot", "Knee Brace", "Blue Light Glasses", "Pulse Oximeter", "Resistance Bands", "Essential Oils", "Sleep Mask", "White Noise Machine"],
+        "Automotive": ["Dash Cam", "Car Vacuum", "Jump Starter", "Phone Mount", "Tire Inflator", "Backseat Organizer", "Microfiber Towels", "Windshield Shade", "Car Trash Can", "Leather Cleaner", "OBD2 Scanner", "Ice Scraper", "Headrest Hook", "Emergency Flare Kit", "Car Scent", "Blind Spot Mirror", "Trunk Organizer", "Ceramic Coating", "Tire Pressure Gauge", "Car Wax"],
+        "Office": ["Desk Lamp", "Ergonomic Mouse", "Monitor Stand", "Notebook Set", "Paper Shredder", "Whiteboard", "Desk Mat", "Standing Desk Converter", "File Organizer", "Label Maker", "Stapler", "Gel Pens", "Cable Management Box", "Digital Clock", "Planner", "Footrest", "Privacy Screen", "Letter Opener", "Clip Board", "Journal"],
+        "All": ["Acoustic Foam", "Bonsai Kit", "Crystal Ball", "Djembe Drum", "Film Camera", "Gasket Set", "Hammock", "Isolator Pad", "Jigsaw Puzzle", "Kaleidoscope", "Lava Lamp", "Metal Detector", "Night Vision Goggles", "Ocarina", "Prism", "Quill Pen", "Retro Radio", "Sand Timer", "Telescope", "Unicycle"]
     };
 
-    const modifiers = ["Vintage", "Professional", "Miniature", "Industrial", "Portable", "Luxury", "Smart", "Compact", "Retro", "Electric"];
+    // 40 Unique Descriptors to multiply variety
+    const modifiers = [
+        "Vintage", "Professional", "Miniature", "Industrial", "Portable", "Luxury", "Smart", "Compact", "Retro", "Electric",
+        "Minimalist", "Glowing", "Heavy Duty", "Wooden", "Gold", "Transparent", "Eco-Friendly", "Automated", "Foldable", "Waterproof",
+        "Steampunk", "Cyberpunk", "Classic", "Handmade", "Travel", "High-Tech", "Rustic", "Matte Black", "Ergonomic", "Oversized",
+        "Silent", "Magnetic", "Wireless", "Rechargeable", "Japanese Style", "Nordic", "Colorful", "Pocket-sized", "Experimental", "Universal"
+    ];
 
     let activeCategory = "All";
 
     const grid = document.getElementById('categoryGrid');
 
+    // Create the category toggles
     categories.forEach(cat => {
         const chip = document.createElement('div');
         chip.className = 'chip';
@@ -144,8 +151,6 @@
         
         chip.addEventListener('click', function() {
             const isAlreadyActive = this.classList.contains('active');
-            
-            // Remove active class from all chips
             document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
             
             if (isAlreadyActive) {
@@ -155,29 +160,28 @@
                 activeCategory = cat;
             }
         });
-
         grid.appendChild(chip);
     });
 
+    // The Logic Engine
     document.getElementById('surprise-btn').onclick = () => {
         let pool = [];
 
-        // Logic to build the item pool
         if (activeCategory === "All") {
-            // Merge all category lists
             Object.keys(items).forEach(key => {
                 pool = pool.concat(items[key]);
             });
         } else {
-            // Use specific category or fallback to All if specific category is empty
             pool = items[activeCategory] && items[activeCategory].length > 0 
                    ? items[activeCategory] 
                    : items["All"];
         }
 
+        // Randomly select one item and one modifier
         const randomItem = pool[Math.floor(Math.random() * pool.length)];
         const randomModifier = modifiers[Math.floor(Math.random() * modifiers.length)];
         
+        // Final search string: e.g., "Vintage Mechanical Keyboard"
         const query = encodeURIComponent(`${randomModifier} ${randomItem}`);
         const amazonUrl = `https://www.amazon.com/s?k=${query}`;
         
@@ -187,4 +191,5 @@
 
 </body>
 </html>
+
 
